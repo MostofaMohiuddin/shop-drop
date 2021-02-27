@@ -1,3 +1,6 @@
+import 'package:e_commerce/widgets/authButton.dart';
+import 'package:e_commerce/widgets/authTextField.dart';
+import 'package:e_commerce/widgets/authForm.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatefulWidget {
@@ -9,51 +12,47 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     "Hello",
-      //     style: TextStyle(color: Colors.black),
-      //   ),
-      //   elevation: 0,
-      //   backgroundColor: Colors.transparent,
-      // ),
-      body: Container(
-        padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height / 8, left: 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "HELLO",
-              style: TextStyle(
-                  fontSize: 40, fontWeight: FontWeight.bold, letterSpacing: 3),
-            ),
-            Text(
-              "lorem ipsum dollor",
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.normal,
-                  letterSpacing: 2),
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 2.3,
-            ),
-            Center(
-              child: RaisedButton(
-                onPressed: () {},
-                child: Text("Sign In"),
+      backgroundColor: Color(0xFFe7f6fe),
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height / 15,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Hero(
+                tag: 'icon',
+                child: Container(
+                  height: MediaQuery.of(context).size.height / 4,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/shop-2.png"),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
-            ),
-            // SizedBox(
-            //   height: MediaQuery.of(context).size.height / 2,
-            // ),
-            Center(
-              child: RaisedButton(
-                onPressed: () {},
-                child: Text("Sign In"),
+              Center(
+                child: Text(
+                  "Sign In",
+                  style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1,
+                      color: Color(0xFF0C1029)),
+                ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 20,
+              ),
+              AuthForm(
+                isSignIn: true,
+              ),
+            ],
+          ),
         ),
       ),
     );
