@@ -1,4 +1,5 @@
 import 'package:e_commerce/screens/auth/authHome.dart';
+import 'package:e_commerce/screens/shop/product.dart';
 import 'package:e_commerce/screens/shop/shopHome.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
-      body: ShopHome(),
+      body: Product(),
     );
   }
 }

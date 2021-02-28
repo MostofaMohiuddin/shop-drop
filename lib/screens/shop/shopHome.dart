@@ -44,7 +44,6 @@ class _ShopHomeState extends State<ShopHome> {
                         icon: Icon(Icons.shopping_cart_rounded),
                         color: Color(0xFF0C1029),
                         iconSize: 35,
-                        // tooltip: 'Increase volume by 10',
                         onPressed: () {},
                       ),
                     ),
@@ -52,7 +51,7 @@ class _ShopHomeState extends State<ShopHome> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 20.0),
+                margin: EdgeInsets.symmetric(vertical: 10.0),
                 height: 40.0,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
@@ -75,7 +74,7 @@ class _ShopHomeState extends State<ShopHome> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Container(
                 padding: EdgeInsets.only(left: 5),
@@ -189,9 +188,3 @@ class _ShopHomeState extends State<ShopHome> {
     );
   }
 }
-
-//  buildCategoryItem("Bags"),
-//                   buildCategoryItem("Coats"),
-//                   buildCategoryItem("Jersey"),
-//                   buildCategoryItem("Pant"),
-//                   buildCategoryItem("T-shirt"),
