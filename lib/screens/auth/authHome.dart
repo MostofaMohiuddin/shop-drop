@@ -50,7 +50,7 @@ class _AuthHomeState extends State<AuthHome> {
             ),
           ),
           Text(
-            "Lading Online Shoping App in Bangladesh",
+            "Leading Online Shoping App in Bangladesh",
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.normal,

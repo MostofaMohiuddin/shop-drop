@@ -1,3 +1,5 @@
+import 'package:e_commerce/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'authButton.dart';
@@ -17,16 +19,51 @@ class AuthForm extends StatefulWidget {
 
 class _AuthFormState extends State<AuthForm> {
   String username = "", email = "", password = "";
+  FirebaseAuth auth = FirebaseAuth.instance;
 
-  signIn() {
+  signIn(context) {
+    if (auth.currentUser == null) {
+      print('User is currently signed out!');
+      final snackBar = SnackBar(
+        content: Text('User is currently signed out!'),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+    } else {
+      print('User is signed in!');
+      final snackBar = SnackBar(
+        content: Text('User is signed in!'),
+      );
+      Scaffold.of(context).showSnackBar(snackBar);
+      return;
+    }
+
     if (_formKey.currentState.validate()) {
+      new AuthenticationService(auth).signIn(email: email, password: password);
       print(email + " " + password);
     }
   }
 
-  signUp() {
+  signUp() async {
+    // AuthenticationService _authenticationService =
+    //     new AuthenticationService(auth);
     if (_formKey.currentState.validate()) {
-      print(email + " " + password + " " + username);
+      if (auth.currentUser == null) {
+        print('User is currently signed out!');
+        final snackBar = SnackBar(
+          content: Text('User is currently signed out!'),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
+      } else {
+        print('User is signed in!');
+        final snackBar = SnackBar(
+          content: Text('User is signed in!'),
+        );
+        Scaffold.of(context).showSnackBar(snackBar);
+        // _authenticationService.signOut();
+      }
+      String result = await new AuthenticationService(auth)
+          .signUp(email: email, password: password);
+      print(email + " " + password + " " + result);
     }
   }
 
@@ -95,7 +132,7 @@ class _AuthFormState extends State<AuthForm> {
               AuthButton(
                 onPress: () {
                   //TODO: sign in/sign up
-                  this.widget.isSignIn ? signIn() : signUp();
+                  this.widget.isSignIn ? signIn(context) : signUp();
                 },
                 text: this.widget.isSignIn ? "Sign In" : "Sign Up",
                 color: 0xFF0C1029,
