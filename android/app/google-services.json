@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "66868845354",
+    "project_id": "online-shopping-app-67996",
+    "storage_bucket": "online-shopping-app-67996.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66868845354:android:f008fbf5fa6ceb612f1c53",
+        "android_client_info": {
+          "package_name": "com.example.e_commerce"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "66868845354-mu47gh5jql5lce6v5fj1q29hbn4q9dbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_McdaMMFaor4B4qR8EdXGvPjVAIMKSSc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "66868845354-mu47gh5jql5lce6v5fj1q29hbn4q9dbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "66868845354-5d1ird8ktc2rhb5rtmnilvs2pkn8941o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.sunan.shopme"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

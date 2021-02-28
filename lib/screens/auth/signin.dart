@@ -9,6 +9,8 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
+  String email, password;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +18,7 @@ class _SignInState extends State<SignIn> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height / 15,
+            top: MediaQuery.of(context).size.height / 20,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +48,7 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
+                height: MediaQuery.of(context).size.height / 40,
               ),
               AuthForm(
                 isSignIn: true,

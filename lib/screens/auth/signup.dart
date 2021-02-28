@@ -16,7 +16,7 @@ class _SignUpState extends State<SignUp> {
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height / 15,
+            top: MediaQuery.of(context).size.height / 20,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +46,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
+                height: MediaQuery.of(context).size.height / 40,
               ),
               AuthForm(
                 isSignIn: false,

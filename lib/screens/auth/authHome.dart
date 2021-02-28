@@ -32,7 +32,7 @@ class _AuthHomeState extends State<AuthHome> {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/shop-2.png"),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
