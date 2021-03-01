@@ -86,9 +86,14 @@ class _ShopHomeState extends State<ShopHome> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(
-              'assets/images/bag_1.png',
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/profile');
+            },
+            child: CircleAvatar(
+              backgroundImage: AssetImage(
+                'assets/images/bag_1.png',
+              ),
             ),
           ),
           Badge(

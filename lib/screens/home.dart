@@ -1,6 +1,8 @@
 import 'package:e_commerce/screens/auth/authHome.dart';
 import 'package:e_commerce/screens/shop/product.dart';
 import 'package:e_commerce/screens/shop/shopHome.dart';
+import 'package:e_commerce/screens/user/profile.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -13,11 +15,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
-      body: ShopHome(),
+      body: auth != null && auth.currentUser != null ? ShopHome() : AuthHome(),
     );
   }
 }
