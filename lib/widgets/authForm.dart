@@ -27,14 +27,18 @@ class _AuthFormState extends State<AuthForm> {
       auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
+        setState(() {
+          loading = false;
+        });
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
       });
+
       print(email + " " + password);
-    }
-    setState(() {
-      loading = false;
-    });
+    } else
+      setState(() {
+        loading = false;
+      });
   }
 
   signUp() async {
@@ -47,14 +51,17 @@ class _AuthFormState extends State<AuthForm> {
         var user = auth.currentUser;
 
         user.updateProfile(displayName: username).then((value) {
+          setState(() {
+            loading = false;
+          });
           Navigator.of(context).pushNamedAndRemoveUntil(
               '/home', (Route<dynamic> route) => false);
         });
       });
-    }
-    setState(() {
-      loading = false;
-    });
+    } else
+      setState(() {
+        loading = false;
+      });
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -77,7 +84,7 @@ class _AuthFormState extends State<AuthForm> {
               ),
               color: Colors.white,
             ),
-            height: MediaQuery.of(context).size.height / 1.625,
+            height: 500,
             child: Column(
               children: [
                 this.widget.isSignIn

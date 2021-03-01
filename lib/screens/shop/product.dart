@@ -15,12 +15,14 @@ class _ProductScreenState extends State<ProductScreen> {
     final Product arg = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
-      body: Stack(
-        children: [
-          buildTopSheet(context, arg),
-          buildBottomSheet(context, arg),
-          buildCartButton(context)
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            buildTopSheet(context, arg),
+            buildBottomSheet(context, arg),
+            buildCartButton(context)
+          ],
+        ),
       ),
     );
   }
@@ -50,7 +52,7 @@ class _ProductScreenState extends State<ProductScreen> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 1.8 + 20,
+            height: MediaQuery.of(context).size.height - 300,
             padding: EdgeInsets.only(top: 20),
             // decoration: BoxDecoration(
             //   color: Colors.grey[350],
@@ -104,12 +106,10 @@ class _ProductScreenState extends State<ProductScreen> {
         curve: Curves.fastOutSlowIn,
         margin: EdgeInsets.only(
           top: _toggle
-              ? MediaQuery.of(context).size.height / 2.5
-              : MediaQuery.of(context).size.height / 1.8 - 20,
+              ? MediaQuery.of(context).size.height - 450
+              : MediaQuery.of(context).size.height - 300,
         ),
-        height: _toggle
-            ? MediaQuery.of(context).size.height / 1.1
-            : MediaQuery.of(context).size.height / 1.8 + 20,
+        height: _toggle ? 500 / 1.1 : 300,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),

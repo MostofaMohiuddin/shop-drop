@@ -92,8 +92,9 @@ class _ShopHomeState extends State<ShopHome> {
             },
             child: CircleAvatar(
               backgroundImage: AssetImage(
-                'assets/images/bag_1.png',
+                'assets/images/coat_3.png',
               ),
+              backgroundColor: Colors.grey[200],
             ),
           ),
           Badge(
@@ -174,10 +175,9 @@ class _ShopHomeState extends State<ShopHome> {
     );
   }
 
-  FlatButton buildCategoryItem(item) {
-    return FlatButton(
-      padding: EdgeInsets.all(0),
-      onPressed: () {
+  GestureDetector buildCategoryItem(item) {
+    return GestureDetector(
+      onTap: () {
         print(item.id);
         setState(() {
           _selectedId = item.id;
@@ -190,7 +190,7 @@ class _ShopHomeState extends State<ShopHome> {
               ? Color(0xFF0C1029)
               : Colors.transparent,
         ),
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: EdgeInsets.symmetric(horizontal: 25),
         margin: EdgeInsets.only(right: 0),
         child: Center(
           child: Text(

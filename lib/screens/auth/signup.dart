@@ -25,7 +25,7 @@ class _SignUpState extends State<SignUp> {
               Hero(
                 tag: 'icon',
                 child: Container(
-                  height: MediaQuery.of(context).size.height / 4,
+                  height: MediaQuery.of(context).size.height - 550,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     image: DecorationImage(

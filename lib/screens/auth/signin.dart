@@ -27,7 +27,7 @@ class _SignInState extends State<SignIn> {
               Hero(
                 tag: 'icon',
                 child: Container(
-                  height: MediaQuery.of(context).size.height / 4,
+                  height: MediaQuery.of(context).size.height - 500,
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
                     image: DecorationImage(
