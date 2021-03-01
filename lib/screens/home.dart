@@ -17,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
-      body: Product(),
+      body: ShopHome(),
     );
   }
 }

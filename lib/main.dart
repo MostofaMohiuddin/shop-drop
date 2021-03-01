@@ -1,6 +1,7 @@
 import 'package:e_commerce/screens/auth/signin.dart';
 import 'package:e_commerce/screens/auth/signup.dart';
 import 'package:e_commerce/screens/home.dart';
+import 'package:e_commerce/screens/shop/product.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/signin': (context) => SignIn(),
           '/signup': (context) => SignUp(),
+          '/product': (context) => ProductScreen()
         },
       ),
     );

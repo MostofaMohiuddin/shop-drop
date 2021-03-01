@@ -24,32 +24,7 @@ class _ShopHomeState extends State<ShopHome> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                margin: EdgeInsets.only(
-                  top: 50,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: AssetImage(
-                        'assets/images/bag_1.png',
-                      ),
-                    ),
-                    Badge(
-                      position: BadgePosition.topEnd(top: -5, end: -5),
-                      badgeContent: Text("10"),
-                      badgeColor: Color(0xFFEAEDF4),
-                      child: IconButton(
-                        icon: Icon(Icons.shopping_cart_rounded),
-                        color: Color(0xFF0C1029),
-                        iconSize: 35,
-                        onPressed: () {},
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              buildTopBar(),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0),
                 height: 40.0,
@@ -91,7 +66,7 @@ class _ShopHomeState extends State<ShopHome> {
                 height: MediaQuery.of(context).size.height / 3,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: products.map((e) {
+                  children: recomendedProducts.map((e) {
                     return buildProductItem(context, e);
                   }).toList(),
                 ),
@@ -103,54 +78,94 @@ class _ShopHomeState extends State<ShopHome> {
     );
   }
 
-  Column buildProductItem(BuildContext context, item) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Color(0xFFD6D6D6),
+  Container buildTopBar() {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 50,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          CircleAvatar(
+            backgroundImage: AssetImage(
+              'assets/images/bag_1.png',
             ),
-            margin: EdgeInsets.only(right: 20),
-            width: 160.0,
-            child: Image.asset(item.image),
           ),
-        ),
-        Container(
-          margin: EdgeInsets.only(top: 5),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(left: 5),
-                child: Text(
-                  item.title,
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                width: 100,
+          Badge(
+            position: BadgePosition.topEnd(top: -5, end: -5),
+            badgeContent: Text("10"),
+            badgeColor: Color(0xFFEAEDF4),
+            child: IconButton(
+              icon: Icon(Icons.shopping_cart_rounded),
+              color: Color(0xFF0C1029),
+              iconSize: 35,
+              onPressed: () {},
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  GestureDetector buildProductItem(BuildContext context, Product item) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(
+          context,
+          '/product',
+          arguments: item,
+        );
+      },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.grey[350],
               ),
-              Container(
-                padding: EdgeInsets.only(right: 5),
-                child: Text(
-                  "\$" + item.price.toString(),
-                  style: TextStyle(
+              margin: EdgeInsets.only(right: 20),
+              width: 160.0,
+              child: Hero(
+                  child: Image.asset(item.image),
+                  tag: 'product' + item.id.toString()),
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.only(left: 5),
+                  child: Text(
+                    item.title,
+                    style: TextStyle(
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF8C8C8C)),
-                  textAlign: TextAlign.end,
+                    ),
+                  ),
+                  width: 100,
                 ),
-                width: 60,
-              ),
-            ],
-          ),
-        )
-      ],
+                Container(
+                  padding: EdgeInsets.only(right: 5),
+                  child: Text(
+                    "\$" + item.price.toString(),
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF8C8C8C)),
+                    textAlign: TextAlign.end,
+                  ),
+                  width: 60,
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 
