@@ -185,7 +185,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 child: Container(
                   width: MediaQuery.of(context).size.width - 20,
                   child: Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since. When an unknown printer took a galley.",
+                    product.description,
                     style: TextStyle(
                       fontSize: 15,
                     ),

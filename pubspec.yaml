@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  sliding_up_panel: ^1.0.2
+  cloud_firestore: ^0.16.0+1
   badges: ^1.1.6
   firebase_core: ^0.7.0
   firebase_auth: ^0.20.1

@@ -48,7 +48,7 @@ class Profile extends StatelessWidget {
                   borderRadius: BorderRadius.circular(50),
                   color: Colors.grey[200],
                   image: DecorationImage(
-                    image: AssetImage('assets/images/coat_3.png'),
+                    image: NetworkImage(auth.currentUser.photoURL),
                     fit: BoxFit.contain,
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:e_commerce/models/Category.dart';
 import 'package:e_commerce/models/Product.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,7 @@ class ShopHome extends StatefulWidget {
 }
 
 class _ShopHomeState extends State<ShopHome> {
+  FirebaseAuth auth = FirebaseAuth.instance;
   int _selectedId = categories[0].id;
   @override
   Widget build(BuildContext context) {
@@ -91,9 +93,7 @@ class _ShopHomeState extends State<ShopHome> {
               Navigator.pushNamed(context, '/profile');
             },
             child: CircleAvatar(
-              backgroundImage: AssetImage(
-                'assets/images/coat_3.png',
-              ),
+              backgroundImage: NetworkImage(auth.currentUser.photoURL),
               backgroundColor: Colors.grey[200],
             ),
           ),

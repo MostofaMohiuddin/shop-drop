@@ -1,5 +1,6 @@
 import 'package:e_commerce/services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'authButton.dart';
@@ -65,10 +66,20 @@ class _AuthFormState extends State<AuthForm> {
             .then((value) {
           var user = auth.currentUser;
 
-          user.updateProfile(displayName: username).then((value) {
+          user
+              .updateProfile(
+                  displayName: username,
+                  photoURL: "https://ui-avatars.com/api/?size=200&name=" +
+                      username.replaceAll(" ", "+"))
+              .then((value) {
             setState(() {
               loading = false;
             });
+            final firestoreInstance = FirebaseFirestore.instance;
+            firestoreInstance.collection("users").doc(user.uid).set({
+              "email": user.email,
+              "username": username,
+            }).then((value) {});
             Navigator.of(context).pushNamedAndRemoveUntil(
                 '/home', (Route<dynamic> route) => false);
           });
