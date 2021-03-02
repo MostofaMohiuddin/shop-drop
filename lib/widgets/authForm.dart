@@ -22,42 +22,64 @@ class _AuthFormState extends State<AuthForm> {
   FirebaseAuth auth = FirebaseAuth.instance;
   bool loading = false;
 
-  signIn(context) async {
-    if (_formKey.currentState.validate()) {
-      auth
-          .signInWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        setState(() {
-          loading = false;
-        });
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
-      });
-
-      print(email + " " + password);
-    } else
-      setState(() {
-        loading = false;
-      });
+  _showSnackbar(error) {
+    return SnackBar(
+      content: Text(error),
+    );
   }
 
-  signUp() async {
-    // AuthenticationService _authenticationService =
-    //     new AuthenticationService(auth);
+  signIn(context) async {
     if (_formKey.currentState.validate()) {
-      auth
-          .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) {
-        var user = auth.currentUser;
-
-        user.updateProfile(displayName: username).then((value) {
+      try {
+        await auth
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then((value) {
           setState(() {
             loading = false;
           });
           Navigator.of(context).pushNamedAndRemoveUntil(
               '/home', (Route<dynamic> route) => false);
         });
+
+        print(email + " " + password);
+      } catch (error) {
+        print("my error: " + error.message);
+        Scaffold.of(context).showSnackBar(_showSnackbar(error.message));
+        setState(() {
+          loading = false;
+        });
+      }
+    } else
+      setState(() {
+        loading = false;
       });
+  }
+
+  signUp(context) async {
+    // AuthenticationService _authenticationService =
+    //     new AuthenticationService(auth);
+    if (_formKey.currentState.validate()) {
+      try {
+        await auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) {
+          var user = auth.currentUser;
+
+          user.updateProfile(displayName: username).then((value) {
+            setState(() {
+              loading = false;
+            });
+            Navigator.of(context).pushNamedAndRemoveUntil(
+                '/home', (Route<dynamic> route) => false);
+          });
+        });
+      } catch (error) {
+        print("my error: " + error.message);
+        Scaffold.of(context).showSnackBar(_showSnackbar(error.message));
+        setState(() {
+          loading = false;
+        });
+      }
     } else
       setState(() {
         loading = false;
@@ -100,7 +122,7 @@ class _AuthFormState extends State<AuthForm> {
                             },
                           ),
                           SizedBox(
-                            height: MediaQuery.of(context).size.height / 40,
+                            height: 20,
                           ),
                         ],
                       ),
@@ -113,7 +135,7 @@ class _AuthFormState extends State<AuthForm> {
                   },
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 40,
+                  height: 20,
                 ),
                 AuthTextField(
                   hint: 'Password',
@@ -136,7 +158,9 @@ class _AuthFormState extends State<AuthForm> {
                             loading = true;
                           });
 
-                          this.widget.isSignIn ? signIn(context) : signUp();
+                          this.widget.isSignIn
+                              ? signIn(context)
+                              : signUp(context);
                         },
                   text: loading
                       ? 'Loading'
@@ -147,9 +171,7 @@ class _AuthFormState extends State<AuthForm> {
                   textColor: 0xFFFFFFFF,
                 ),
                 SizedBox(
-                  height: this.widget.isSignIn
-                      ? MediaQuery.of(context).size.height / 20
-                      : MediaQuery.of(context).size.height / 180,
+                  height: 20,
                 ),
                 FlatButton(
                   onPressed: () {
