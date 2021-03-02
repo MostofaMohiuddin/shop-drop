@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 class ShopHome extends StatefulWidget {
   @override
   _ShopHomeState createState() => _ShopHomeState();
-  ShopHome() {}
 }
 
 class _ShopHomeState extends State<ShopHome> {
@@ -22,7 +21,7 @@ class _ShopHomeState extends State<ShopHome> {
   @override
   Widget build(BuildContext context) {
     if (productList.length == 0) _products("Men");
-    // if (recomProductList.length == 0) _recomendedProducts();
+    if (recomProductList.length == 0) _recomendedProducts();
 
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
@@ -35,7 +34,7 @@ class _ShopHomeState extends State<ShopHome> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              buildTopBar(),
+              Builder(builder: (context) => buildTopBar(context)),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0),
                 height: 40.0,
@@ -97,7 +96,7 @@ class _ShopHomeState extends State<ShopHome> {
     );
   }
 
-  Container buildTopBar() {
+  Container buildTopBar(context) {
     return Container(
       margin: EdgeInsets.only(
         top: 50,
@@ -122,7 +121,12 @@ class _ShopHomeState extends State<ShopHome> {
               icon: Icon(Icons.shopping_cart_rounded),
               color: Color(0xFF0C1029),
               iconSize: 35,
-              onPressed: () {},
+              onPressed: () {
+                final snackbar = SnackBar(
+                    content: Text(
+                        "Sorry Developer hasn't completed this feature yet"));
+                Scaffold.of(context).showSnackBar(snackbar);
+              },
             ),
           ),
         ],
@@ -221,16 +225,6 @@ class _ShopHomeState extends State<ShopHome> {
         });
       });
     });
-
-    // QuerySnapshot querySnapshot =
-    //     await firestoreInstance.collection("recomendedProducts").get();
-    // querySnapshot.docs.forEach((ref) {
-    //   ref
-    // });
-
-    // tempList.forEach((element) {
-    //   print("My Item" + element.title);
-    // });
   }
 
   _products(item) async {
@@ -263,7 +257,7 @@ class _ShopHomeState extends State<ShopHome> {
         setState(() {
           _selectedId = item;
         });
-        _recomendedProducts();
+        // _recomendedProducts();
         // _products(item);
       },
       child: Container(

@@ -1,5 +1,3 @@
-import 'package:e_commerce/widgets/authButton.dart';
-import 'package:e_commerce/widgets/authTextField.dart';
 import 'package:e_commerce/widgets/authForm.dart';
 import 'package:flutter/material.dart';
 

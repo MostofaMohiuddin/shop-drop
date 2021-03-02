@@ -1,7 +1,7 @@
 import 'package:e_commerce/screens/auth/authHome.dart';
-import 'package:e_commerce/screens/shop/product.dart';
+
 import 'package:e_commerce/screens/shop/shopHome.dart';
-import 'package:e_commerce/screens/user/profile.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

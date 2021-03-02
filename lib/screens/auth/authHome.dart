@@ -9,8 +9,6 @@ class AuthHome extends StatefulWidget {
 class _AuthHomeState extends State<AuthHome> {
   @override
   Widget build(BuildContext context) {
-    const image = 'assets/images/shop.svg';
-
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
       body: Container(
@@ -44,7 +42,7 @@ class _AuthHomeState extends State<AuthHome> {
                 height: MediaQuery.of(context).size.height / 16,
               ),
               Text(
-                "SHOP ME",
+                "SHOP DROP",
                 style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,

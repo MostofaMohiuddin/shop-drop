@@ -19,12 +19,14 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
       body: SafeArea(
-        child: Stack(
-          children: [
-            buildTopSheet(context, product, isRecom),
-            buildBottomSheet(context, product),
-            buildCartButton(context)
-          ],
+        child: Builder(
+          builder: (context) => Stack(
+            children: [
+              buildTopSheet(context, product, isRecom),
+              buildBottomSheet(context, product),
+              buildCartButton(context)
+            ],
+          ),
         ),
       ),
     );
@@ -34,12 +36,19 @@ class _ProductScreenState extends State<ProductScreen> {
     return Container(
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 1.15),
       child: Center(
-          child: AuthButton(
-        color: 0xFF0C1029,
-        onPress: () {},
-        text: 'Add to Cart',
-        textColor: 0xFFFFFFFF,
-      )),
+        child: AuthButton(
+          color: 0xFF0C1029,
+          onPress: () {
+            final snackbar = SnackBar(
+              content:
+                  Text("Sorry Developer hasn't completed this feature yet"),
+            );
+            Scaffold.of(context).showSnackBar(snackbar);
+          },
+          text: 'Add to Cart',
+          textColor: 0xFFFFFFFF,
+        ),
+      ),
     );
   }
 
@@ -87,11 +96,16 @@ class _ProductScreenState extends State<ProductScreen> {
               Container(
                 margin: EdgeInsets.only(top: 30, right: 10),
                 child: IconButton(
-                    icon: Icon(Icons.shopping_cart_rounded),
-                    iconSize: 34,
-                    onPressed: () {
-                      print("hello");
-                    }),
+                  icon: Icon(Icons.shopping_cart_rounded),
+                  iconSize: 34,
+                  onPressed: () {
+                    final snackbar = SnackBar(
+                      content: Text(
+                          "Sorry Developer hasn't completed this feature yet"),
+                    );
+                    Scaffold.of(context).showSnackBar(snackbar);
+                  },
+                ),
               ),
             ],
           ),
