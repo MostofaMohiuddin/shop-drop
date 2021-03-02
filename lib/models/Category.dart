@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Category {
   final String title;
   final int id;
@@ -27,6 +25,13 @@ List<Category> categories = [
     id: 4,
     title: "Old",
   ),
+];
+
+List<String> categoriesString = [
+  "Men",
+  "Women",
+  "Kid",
+  "Old",
 ];
 
 String dummyText =

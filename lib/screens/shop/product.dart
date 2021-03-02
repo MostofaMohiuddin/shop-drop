@@ -12,14 +12,17 @@ class _ProductScreenState extends State<ProductScreen> {
   String _selectedSize = 'M';
   @override
   Widget build(BuildContext context) {
-    final Product arg = ModalRoute.of(context).settings.arguments;
+    var arg = [];
+    arg = ModalRoute.of(context).settings.arguments;
+    final Product product = arg[0];
+    final isRecom = arg[1];
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
       body: SafeArea(
         child: Stack(
           children: [
-            buildTopSheet(context, arg),
-            buildBottomSheet(context, arg),
+            buildTopSheet(context, product, isRecom),
+            buildBottomSheet(context, product),
             buildCartButton(context)
           ],
         ),
@@ -40,7 +43,8 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  GestureDetector buildTopSheet(BuildContext context, Product product) {
+  GestureDetector buildTopSheet(
+      BuildContext context, Product product, bool isRecom) {
     return GestureDetector(
       onTap: () {
         if (_toggle)
@@ -62,8 +66,10 @@ class _ProductScreenState extends State<ProductScreen> {
             //   ),
             // ),
             child: Hero(
-              child: Image.asset(product.image),
-              tag: 'product' + product.id.toString(),
+              child: Image.network(product.image),
+              tag: isRecom
+                  ? 'recomproduct' + product.id.toString()
+                  : 'product' + product.id.toString(),
             ),
           ),
           Row(

@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:e_commerce/models/Category.dart';
 import 'package:e_commerce/models/Product.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,13 +9,21 @@ import 'package:flutter/material.dart';
 class ShopHome extends StatefulWidget {
   @override
   _ShopHomeState createState() => _ShopHomeState();
+  ShopHome() {}
 }
 
 class _ShopHomeState extends State<ShopHome> {
   FirebaseAuth auth = FirebaseAuth.instance;
-  int _selectedId = categories[0].id;
+  FirebaseFirestore firestoreInstance = FirebaseFirestore.instance;
+  List<Product> productList = [];
+  List<Product> recomProductList = [];
+
+  String _selectedId = "Men";
   @override
   Widget build(BuildContext context) {
+    if (productList.length == 0) _products("Men");
+    // if (recomProductList.length == 0) _recomendedProducts();
+
     return Scaffold(
       backgroundColor: Color(0xFFe7f6fe),
       body: SingleChildScrollView(
@@ -32,7 +41,7 @@ class _ShopHomeState extends State<ShopHome> {
                 height: 40.0,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: categories.map((element) {
+                  children: categoriesString.map((element) {
                     return buildCategoryItem(element);
                   }).toList(),
                 ),
@@ -40,15 +49,19 @@ class _ShopHomeState extends State<ShopHome> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
                 height: MediaQuery.of(context).size.height / 3,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: products.map((e) {
-                    if (e.category.id == _selectedId)
-                      return buildProductItem(context, e);
-                    else
-                      return SizedBox();
-                  }).toList(),
-                ),
+                child: productList.length == 0
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: productList.map((e) {
+                          if (e.category == _selectedId)
+                            return buildProductItem(context, e, false);
+                          else
+                            return SizedBox();
+                        }).toList(),
+                      ),
               ),
               SizedBox(
                 height: 10,
@@ -66,12 +79,16 @@ class _ShopHomeState extends State<ShopHome> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 20.0),
                 height: MediaQuery.of(context).size.height / 3,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: recomendedProducts.map((e) {
-                    return buildProductItem(context, e);
-                  }).toList(),
-                ),
+                child: recomProductList.length == 0
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: recomProductList.map((e) {
+                          return buildProductItem(context, e, true);
+                        }).toList(),
+                      ),
               ),
             ],
           ),
@@ -113,13 +130,14 @@ class _ShopHomeState extends State<ShopHome> {
     );
   }
 
-  GestureDetector buildProductItem(BuildContext context, Product item) {
+  GestureDetector buildProductItem(
+      BuildContext context, Product item, bool isRecom) {
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(
           context,
           '/product',
-          arguments: item,
+          arguments: [item, isRecom],
         );
       },
       child: Column(
@@ -135,8 +153,9 @@ class _ShopHomeState extends State<ShopHome> {
               margin: EdgeInsets.only(right: 20),
               width: 160.0,
               child: Hero(
-                  child: Image.asset(item.image),
-                  tag: 'product' + item.id.toString()),
+                  child: Image.network(item.image),
+                  tag:
+                      isRecom ? 'recomproduct' + item.id : 'product' + item.id),
             ),
           ),
           Container(
@@ -175,32 +194,94 @@ class _ShopHomeState extends State<ShopHome> {
     );
   }
 
-  GestureDetector buildCategoryItem(item) {
+  _recomendedProducts() async {
+    List<Product> tempRecomList = [];
+    await firestoreInstance
+        .collection("recomendedProducts")
+        .get()
+        .then((querySnapshot) {
+      querySnapshot.docs.forEach((ref) {
+        ref.data()["ref"].get().then((result) {
+          print("My dAta: ");
+          print(
+              result.data()["price"].toString() + " " + result.data()["title"]);
+
+          tempRecomList.add(
+            new Product(
+                category: result.data()["category"],
+                description: result.data()["description"],
+                id: result.id,
+                image: result.data()["image"],
+                price: result.data()["price"],
+                title: result.data()["title"]),
+          );
+          setState(() {
+            recomProductList = [...tempRecomList];
+          });
+        });
+      });
+    });
+
+    // QuerySnapshot querySnapshot =
+    //     await firestoreInstance.collection("recomendedProducts").get();
+    // querySnapshot.docs.forEach((ref) {
+    //   ref
+    // });
+
+    // tempList.forEach((element) {
+    //   print("My Item" + element.title);
+    // });
+  }
+
+  _products(item) async {
+    List<Product> tempList = [];
+    await firestoreInstance.collection("products").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((result) {
+        // print(result.data());
+        // if(result)
+        tempList.add(new Product(
+            category: result.data()["category"],
+            description: result.data()["description"],
+            id: result.id,
+            image: result.data()["image"],
+            price: result.data()["price"],
+            title: result.data()["title"]));
+      });
+    });
+    setState(() {
+      productList.clear();
+      productList = [...tempList];
+    });
+
+    // print(productList);
+  }
+
+  GestureDetector buildCategoryItem(String item) {
     return GestureDetector(
       onTap: () {
-        print(item.id);
+        // print(item.id);
         setState(() {
-          _selectedId = item.id;
+          _selectedId = item;
         });
+        _recomendedProducts();
+        // _products(item);
       },
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(50),
-          color: this._selectedId == item.id
-              ? Color(0xFF0C1029)
-              : Colors.transparent,
+          color:
+              this._selectedId == item ? Color(0xFF0C1029) : Colors.transparent,
         ),
         padding: EdgeInsets.symmetric(horizontal: 25),
         margin: EdgeInsets.only(right: 0),
         child: Center(
           child: Text(
-            item.title,
+            item,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 17,
-              color: this._selectedId == item.id
-                  ? Colors.white
-                  : Color(0xFF0C1029),
+              color:
+                  this._selectedId == item ? Colors.white : Color(0xFF0C1029),
             ),
           ),
         ),
